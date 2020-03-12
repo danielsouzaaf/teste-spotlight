@@ -1,0 +1,2386 @@
+openapi: 3.0.0
+info:
+  description: ''
+  title: Pedidos
+  version: ''
+servers: []
+paths:
+  /order-freight-status:
+    get:
+      parameters:
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                response:
+                  value:
+                    data:
+                      - attributes:
+                          initialPlaces: Aguardando Coleta
+                          name: Fluxo simples
+                          places:
+                            - Aguardando Coleta
+                            - Coletado
+                            - Em Entrega
+                            - Entregue
+                            - Exceção
+                            - Cancelado
+                          transitions: []
+                        id: fluxo_simples
+                        type: order-freight-status-workflows
+          description: OK
+          headers: {}
+      tags:
+        - Pedidos/Entregas - Fluxos de Status
+      description: 'Lista os objetos do sistema conforme array do schema `JSON:API OrderFreightStatusWorkflow`.'
+      operationId: Listar Fluxos de Status
+      summary: Listar Fluxos de Status
+  '/order-freight-status/{id}':
+    get:
+      parameters:
+        - description: ID do objeto a ser consultado
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                response:
+                  value:
+                    data: []
+          description: OK
+          headers: {}
+      tags:
+        - Pedidos/Entregas - Fluxos de Status
+      description: 'Retorna os dados do objeto definido conforme schema `JSON:API OrderFreightStatusWorkflow`.'
+      operationId: Visualizar Fluxo de Status
+      summary: Visualizar Fluxo de Status
+  /order-freights:
+    get:
+      parameters:
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                response:
+                  value:
+                    data:
+                      attributes:
+                        subtotal: 53.9
+                        tracking_code: '269655556701'
+                      id: 88x59ir2uiZq
+                      type: order-freights
+          description: OK
+          headers: {}
+      tags:
+        - Pedidos - Entregas
+      description: |-
+        Lista os objetos do sistema conforme array do schema `JSON:API OrderFreight`.
+
+        Atributos disponíveis com identificador `order-freights` (`JSON:API OrderFreight Attribute`).
+
+        **Retorno**
+
+        Retorna com código `200 OK` no formato `JSON` os dados conforme array de objetos `JSON:API OrderFreight`
+
+        **Erros**
+
+        Podem ocorrer os seguintes erros:
+
+        - Sem permissão `403 Forbidden`: quando a autenticação enviada não possuir permissão para realizar a ação no objeto, ou em alguma depedência a ser consultada.
+
+        **Acesso**
+
+        Disponível para todos usuários, porém apenas retornará informações que pertecerem a autenticação.
+      operationId: Listar Entregas de Pedido
+      summary: Listar Entregas de Pedido
+    post:
+      parameters:
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '201':
+          content:
+            application/json:
+              examples:
+                response:
+                  value:
+                    data:
+                      attributes:
+                        subtotal: 34.8
+                        tracking_code: '269655556701'
+                      id: 88x59ir2uiZq
+                      type: order-freights
+          description: Created
+          headers: {}
+      tags:
+        - Pedidos - Entregas
+      description: |-
+        Cadastra um novo objeto no sistema, usandos os dados disponíveis conforme schema `JSON:API OrderFreight`.
+
+        Atributos disponíveis com identificador `order-freights` (`JSON:API OrderFreight Attribute`).
+
+        Order Item necessita obrigatoriamente de `order_id`
+
+        Este objeto aceita metadados.
+
+        **Retorno**
+
+        Retorna com código `201 OK` no formato `JSON` os dados conforme array de objetos `JSON:API OrderFreight`
+
+        **Erros**
+
+        Podem ocorrer os seguintes erros:
+
+        - Sem permissão `403 Forbidden`: quando a autenticação enviada não possuir permissão para realizar a ação no objeto, ou em alguma depedência a ser consultada.
+
+        - Não encontrado `404 Not Found`: quando alguma depedência da consulta não existir no sistema.
+
+        **Acesso**
+
+        Disponível para todos usuários, porém apenas retornará informações que pertecerem a autenticação.
+      operationId: Cadastrar Entrega de Pedido
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                order_id:
+                  description: ID do Pedido a ser consultado
+                  type: string
+                status:
+                  description: Status do Frete do Pedido
+                  type: string
+                subtotal:
+                  description: Subtotal
+                  type: string
+                tracking_code:
+                  description: Código de rastreio do pedido
+                  type: string
+              required:
+                - order_id
+                - tracking_code
+              type: object
+      summary: Cadastrar Entrega de Pedido
+  /order-freights/ack_cancel_tag:
+    post:
+      parameters:
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+          headers: {}
+      tags:
+        - Ack
+      description: |-
+        Cancelar tag de entrega do pedido no sistema, usandos os dados disponíveis conforme schema `JSON:API OrderFreight Ack`.
+
+        Cancelar tag de entrega do pedido necessita obrigatoriamente de `orderfreight_id` e `success`.
+
+        **Retorno**
+
+        Retorna com código `200 OK` no formato `JSON` os dados conforme array de objetos `JSON:API OrderFreight Ack`
+
+        **Erros**
+
+        Podem ocorrer os seguintes erros:
+
+        - Sem permissão `403 Forbidden`: quando a autenticação enviada não possuir permissão para realizar a ação no objeto, ou em alguma depedência a ser consultada.
+
+        **Acesso**
+
+        Disponível para todos usuários, porém apenas retornará informações que pertecerem a autenticação.
+      operationId: Cancelar Tag
+      requestBody:
+        $ref: '#/components/requestBodies/Cancelar_TagBody'
+      summary: Cancelar Tag
+  /order-freights/ack_create_tag:
+    post:
+      parameters:
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+          headers: {}
+      tags:
+        - Ack
+      description: |-
+        Cria tag de entrega do pedido no sistema, usandos os dados disponíveis conforme schema `JSON:API OrderFreight Ack`.
+
+        Criar tag de entrega do pedido necessita obrigatoriamente de `orderfreight_id` e `success`.
+
+        **Retorno**
+
+        Retorna com código `200 OK` no formato `JSON` os dados conforme array de objetos `JSON:API OrderFreight Ack`
+
+        **Erros**
+
+        Podem ocorrer os seguintes erros:
+
+        - Sem permissão `403 Forbidden`: quando a autenticação enviada não possuir permissão para realizar a ação no objeto, ou em alguma depedência a ser consultada.
+
+        **Acesso**
+
+        Disponível para todos usuários, porém apenas retornará informações que pertecerem a autenticação.
+      operationId: Criar Tag
+      requestBody:
+        $ref: '#/components/requestBodies/Cancelar_TagBody'
+      summary: Criar Tag
+  /order-freights/ack_tracking_code:
+    post:
+      parameters:
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+          headers: {}
+      tags:
+        - Ack
+      description: |-
+        Salvar tracking code a do pedido no sistema, usandos os dados disponíveis conforme schema `JSON:API OrderFreight Ack`.
+
+        Salvar tracking code do pedido necessita obrigatoriamente de `orderfreight_id` e `success`.
+
+        **Retorno**
+
+        Retorna com código `200 OK` no formato `JSON` os dados conforme array de objetos `JSON:API OrderFreight Ack`
+
+        **Erros**
+
+        Podem ocorrer os seguintes erros:
+
+        - Sem permissão `403 Forbidden`: quando a autenticação enviada não possuir permissão para realizar a ação no objeto, ou em alguma depedência a ser consultada.
+
+        **Acesso**
+
+        Disponível para todos usuários, porém apenas retornará informações que pertecerem a autenticação.
+      operationId: Salvar tracking-code
+      requestBody:
+        $ref: '#/components/requestBodies/Cancelar_TagBody'
+      summary: Salvar tracking-code
+  '/order-freights/{id}':
+    delete:
+      parameters:
+        - description: ID do objeto a ser desativado
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+          headers: {}
+      tags:
+        - Pedidos - Entregas
+      description: |-
+        Desativa o objeto indicado do sistema.
+
+        **CUIDADO** Todos objeto relacionados a ele (configurações de entrega de pedido) serão marcados para desativação e não estarão mais disponíveis.
+      operationId: Desativar Entrega de Pedido
+      summary: Desativar Entrega de Pedido
+    get:
+      parameters:
+        - description: ID do objeto a ser consultado
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                response:
+                  value:
+                    data:
+                      attributes:
+                        subtotal: 53.9
+                        tracking_code: '269655556701'
+                      id: 88x59ir2uiZq
+                      type: order-freights
+          description: OK
+          headers: {}
+      tags:
+        - Pedidos - Entregas
+      description: |-
+        Retorna os dados do objeto definido conforme schema `JSON:API OrderFreight`.
+
+        Atributos disponíveis com identificador `order-freights` (`JSON:API OrderFreight Attribute`).
+
+        **Retorno**
+
+        Retorna com código `200 OK` no formato `JSON` os dados conforme array de objetos `JSON:API OrderFreight`
+
+        **Erros**
+
+        Podem ocorrer os seguintes erros:
+
+        - Sem permissão `403 Forbidden`: quando a autenticação enviada não possuir permissão para realizar a ação no objeto, ou em alguma depedência a ser consultada.
+
+        - Não encontrado `404 Not Found`: quando alguma depedência da consulta não existir no sistema.
+
+        **Acesso**
+
+        Disponível para todos usuários, porém apenas retornará informações que pertecerem a autenticação.
+      operationId: Visualizar Entrega de Pedido
+      summary: Visualizar Entrega de Pedido
+    patch:
+      parameters:
+        - description: ID do objeto a ser editado
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                response:
+                  value:
+                    data:
+                      attributes:
+                        subtotal: 12.5
+                        tracking_code: '269655556701'
+                      id: 88x59ir2uiZq
+                      type: order-freights
+          description: OK
+          headers: {}
+      tags:
+        - Pedidos - Entregas
+      description: |-
+        Edita o objeto definido no sistema, alterando apenas os dados enviadas na requisição conforme schema `JSON:API OrderFreight`.
+
+        Este objeto aceita metadados.
+
+        **Retorno**
+
+        Retorna com código `200 OK` no formato `JSON` os dados conforme array de objetos `JSON:API OrderFreight`
+
+        **Erros**
+
+        Podem ocorrer os seguintes erros:
+
+        - Sem permissão `403 Forbidden`: quando a autenticação enviada não possuir permissão para realizar a ação no objeto, ou em alguma depedência a ser consultada.
+
+        - Não encontrado `404 Not Found`: quando alguma depedência da consulta não existir no sistema.
+
+        **Acesso**
+
+        Disponível para todos usuários, porém apenas retornará informações que pertecerem a autenticação.
+      operationId: Editar Entrega de Pedido
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example:
+                subtotal: 12.5
+              properties:
+                subtotal:
+                  type: number
+              type: object
+      summary: Editar Entrega de Pedido
+  '/order-freights/{id}/status':
+    get:
+      parameters:
+        - description: ID do Pedido a ser consultado
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                response:
+                  value:
+                    data:
+                      attributes:
+                        status: Aguardando Coleta
+                      id: G5VeaWQddO1i
+                      type: order-freight-status
+          description: OK
+          headers: {}
+      tags:
+        - Pedidos/Entregas - Status de Entregas
+      description: |-
+        Lista os objetos do sistema conforme array do schema `JSON:API OrderFreightStatus`.
+
+        Atributos disponíveis com identificador `order-status` (`JSON:API OrderFreightStatus Attribute`).
+
+        **Retorno**
+
+        Retorna com código `200 OK` no formato `JSON` os dados conforme array de objetos `JSON:API OrderFreight Status`
+
+        **Erros**
+
+        Podem ocorrer os seguintes erros:
+
+        - Sem permissão `403 Forbidden`: quando a autenticação enviada não possuir permissão para realizar a ação no objeto, ou em alguma depedência a ser consultada.
+
+        - Não encontrado `404 Not Found`: quando alguma depedência da consulta não existir no sistema.
+
+        **Acesso**
+
+        Disponível para todos usuários, porém apenas retornará informações que pertecerem a autenticação.
+      operationId: Listar Movimento
+      summary: Listar Movimento
+    post:
+      parameters:
+        - description: ID da Entrega de Pedido a ser consultado
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '201':
+          content:
+            application/json:
+              examples:
+                response:
+                  value:
+                    data:
+                      attributes:
+                        status: Coletado
+                      id: G5VeaWQddO1i
+                      type: order-freight-status
+          description: Created
+          headers: {}
+      tags:
+        - Pedidos/Entregas - Status de Entregas
+      description: |-
+        Cadastra um novo objeto no sistema, usandos os dados disponíveis conforme schema `JSON:API OrderFreightStatus`.
+
+        Atributos disponíveis com identificador `order-freight-status` (`JSON:API OrderFreightStatus Attribute`).
+
+        Este objeto aceita metadados.
+
+        **Retorno**
+
+        Retorna com código `201 OK` no formato `JSON` os dados conforme array de objetos `JSON:API OrderFreight Status`
+
+        **Erros**
+
+        Podem ocorrer os seguintes erros:
+
+        - Sem permissão `403 Forbidden`: quando a autenticação enviada não possuir permissão para realizar a ação no objeto, ou em alguma depedência a ser consultada.
+
+        - Não encontrado `404 Not Found`: quando alguma depedência da consulta não existir no sistema.
+
+        **Acesso**
+
+        Disponível para todos usuários, porém apenas retornará informações que pertecerem a autenticação.
+      operationId: Movimentar Status
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                status:
+                  description: Status que deseja atualizar o pedido
+                  type: string
+              required:
+                - status
+              type: object
+      summary: Movimentar Status
+  '/order-freights/{id}/status/{status_id}':
+    get:
+      parameters:
+        - description: ID do objeto a ser consultado
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                response:
+                  value:
+                    data:
+                      attributes:
+                        status: Aguardando Coleta
+                      id: G5VeaWQddO1i
+                      type: order-freight-status
+          description: OK
+          headers: {}
+      tags:
+        - Pedidos/Entregas - Status de Entregas
+      description: |-
+        Retorna os dados do objeto definido conforme schema `JSON:API OrderFreightStatus`.
+
+        Atributos disponíveis com identificador `order-status` (`JSON:API OrderFreightStatus Attribute`).
+
+        **Retorno**
+
+        Retorna com código `200 OK` no formato `JSON` os dados conforme array de objetos `JSON:API OrderFreight Status`
+
+        **Erros**
+
+        Podem ocorrer os seguintes erros:
+
+        - Sem permissão `403 Forbidden`: quando a autenticação enviada não possuir permissão para realizar a ação no objeto, ou em alguma depedência a ser consultada.
+
+        - Não encontrado `404 Not Found`: quando alguma depedência da consulta não existir no sistema.
+
+        **Acesso**
+
+        Disponível para todos usuários, porém apenas retornará informações que pertecerem a autenticação.
+      operationId: Visualizar Movimento
+      summary: Visualizar Movimento
+  '/order-freights/{id}/upload/{collection_name}':
+    post:
+      parameters:
+        - description: Identificador do Pedido
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - description: Nome da Collection
+          in: path
+          name: collection_name
+          required: true
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '201':
+          content:
+            application/json:
+              examples:
+                response:
+                  value:
+                    data:
+                      attributes:
+                        alt: null
+                        collection_name: teste
+                        extension: xml
+                        file_name: random.xml
+                        mime_type: text/plain
+                        name: random
+                        order_column: 1
+                        size: 14
+                        size_readable: 14 B
+                        title: null
+                        type_extension: other
+                        type_mime: other
+                        url: 'http://localhost/storage/order/Mia63F9C/jubs/1/random.xml'
+                      id: '1'
+                      type: medias
+          description: Created
+          headers: {}
+      tags:
+        - Pedidos/Entregas - Upload de Anexos
+      description: 'Cadastra um novo objeto no sistema, usandos os dados disponíveis conforme schema `JSON:API Media`.'
+      operationId: Realizar Upload de Entrega de Pedido
+      summary: Realizar Upload de Entrega de Pedido
+  /order-status:
+    get:
+      parameters:
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                response:
+                  value:
+                    data:
+                      - attributes:
+                          initialPlaces: Em Fila
+                          name: Fluxo simples
+                          places:
+                            - Em Fila
+                            - Aguardando Estoque
+                            - Aguardando Faturamento
+                            - Aprovado
+                            - Faturado
+                            - Aguardando Envio
+                            - Aguardando Pendência Estoque
+                            - Preparando Entrega
+                            - Enviado
+                            - Entregue
+                            - Falha de Cadastramento
+                            - Aguardando Aprovação
+                            - Exceção
+                            - Devolvido
+                            - Cancelado
+                          transitions:
+                            Aguardando_Aprovação/Aguardando_Estoque:
+                              from: Aguardando Aprovação
+                              to: Aguardando Estoque
+                              weight: 1
+                            Aguardando_Aprovação/Aprovado:
+                              from: Aguardando Aprovação
+                              to: Aprovado
+                              weight: 1
+                            Aguardando_Aprovação/Cancelado:
+                              from: Aguardando Aprovação
+                              to: Cancelado
+                              weight: 1
+                            Aguardando_Aprovação/Exceção:
+                              from: Aguardando Aprovação
+                              to: Exceção
+                              weight: 8
+                            Aguardando_Envio/Enviado:
+                              from: Aguardando Envio
+                              to: Enviado
+                              weight: 1
+                            Aguardando_Envio/Exceção:
+                              from: Aguardando Envio
+                              to: Exceção
+                              weight: 2
+                            Aguardando_Estoque/Aguardando_Pendência_Estoque:
+                              from: Aguardando Estoque
+                              to: Aguardando Pendência Estoque
+                              weight: 1
+                            Aguardando_Estoque/Exceção:
+                              from: Aguardando Estoque
+                              to: Exceção
+                              weight: 7
+                            Aguardando_Estoque/Preparando_Entrega:
+                              from: Aguardando Estoque
+                              to: Preparando Entrega
+                              weight: 1
+                            Aguardando_Faturamento/Exceção:
+                              from: Aguardando Faturamento
+                              to: Exceção
+                              weight: 4
+                            Aguardando_Faturamento/Faturado:
+                              from: Aguardando Faturamento
+                              to: Faturado
+                              weight: 1
+                            Aguardando_Pendência_Estoque/Aguardando_Estoque:
+                              from: Aguardando Pendência Estoque
+                              to: Aguardando Estoque
+                              weight: 1
+                            Aguardando_Pendência_Estoque/Cancelado:
+                              from: Aguardando Pendência Estoque
+                              to: Cancelado
+                              weight: 2
+                            Aguardando_Pendência_Estoque/Exceção:
+                              from: Aguardando Pendência Estoque
+                              to: Exceção
+                              weight: 6
+                            Aprovado/Aguardando_Estoque:
+                              from: Aprovado
+                              to: Aguardando Estoque
+                              weight: 1
+                            Devolvido/Exceção:
+                              from: Devolvido
+                              to: Exceção
+                              weight: 2
+                            Em_Fila:
+                              from: null
+                              to: Em Fila
+                              weight: 0
+                            Em_Fila/Aguardando_Aprovação:
+                              from: Em Fila
+                              to: Aguardando Aprovação
+                              weight: 1
+                            Em_Fila/Aprovado:
+                              from: Em Fila
+                              to: Aprovado
+                              weight: 1
+                            Em_Fila/Falha_Cadastramento:
+                              from: Em Fila
+                              to: Falha de Cadastramento
+                              weight: 1
+                            Entregue/Devolvido:
+                              from: Entregue
+                              to: Devolvido
+                              weight: 1
+                            Entregue/Exceção:
+                              from: Entregue
+                              to: Exceção
+                              weight: 2
+                            Enviado/Entregue:
+                              from: Enviado
+                              to: Entregue
+                              weight: 1
+                            Enviado/Exceção:
+                              from: Enviado
+                              to: Exceção
+                              weight: 1
+                            Exceção:
+                              from: Em Fila
+                              to: Exceção
+                              weight: 99
+                            Exceção/Aguardando_Aprovação:
+                              from: Exceção
+                              to: Aguardando Aprovação
+                              weight: 1
+                            Exceção/Aguardando_Envio:
+                              from: Exceção
+                              to: Aguardando Envio
+                              weight: 1
+                            Exceção/Aguardando_Estoque:
+                              from: Exceção
+                              to: Aguardando Estoque
+                              weight: 1
+                            Exceção/Aguardando_Faturamento:
+                              from: Exceção
+                              to: Aguardando Faturamento
+                              weight: 1
+                            Exceção/Aguardando_Pendência_Estoque:
+                              from: Exceção
+                              to: Aguardando Pendência Estoque
+                              weight: 1
+                            Exceção/Cancelado:
+                              from: Exceção
+                              to: Cancelado
+                              weight: 1
+                            Exceção/Devolvido:
+                              from: Exceção
+                              to: Devolvido
+                              weight: 1
+                            Exceção/Entregue:
+                              from: Exceção
+                              to: Entregue
+                              weight: 1
+                            Exceção/Enviado:
+                              from: Exceção
+                              to: Enviado
+                              weight: 1
+                            Exceção/Faturado:
+                              from: Exceção
+                              to: Faturado
+                              weight: 1
+                            Exceção/Preparando_Entrega:
+                              from: Exceção
+                              to: Preparando Entrega
+                              weight: 1
+                            Falha_Cadastramento/Em_Fila:
+                              from: Falha de Cadastramento
+                              to: Em Fila
+                              weight: 1
+                            Faturado/Aguardando_Envio:
+                              from: Faturado
+                              to: Aguardando Envio
+                              weight: 1
+                            Faturado/Exceção:
+                              from: Faturado
+                              to: Exceção
+                              weight: 3
+                            Preparando_Entrega/Aguardando_Faturamento:
+                              from: Preparando Entrega
+                              to: Aguardando Faturamento
+                              weight: 1
+                            Preparando_Entrega/Exceção:
+                              from: Preparando Entrega
+                              to: Exceção
+                              weight: 5
+                        id: fluxo_simples
+                        type: order-status-workflows
+          description: OK
+          headers: {}
+      tags:
+        - Pedidos - Fluxos de Status
+      description: 'Lista os objetos do sistema conforme array do schema `JSON:API OrderStatusWorkflow`.'
+      operationId: Listar Fluxos de Status
+      summary: Listar Fluxos de Status
+  '/order-status/{id}':
+    get:
+      parameters:
+        - description: ID do objeto a ser consultado
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                response:
+                  value:
+                    data: []
+          description: OK
+          headers: {}
+      tags:
+        - Pedidos - Fluxos de Status
+      description: 'Retorna os dados do objeto definido conforme schema `JSON:API OrderStatusWorkflow`.'
+      operationId: Visualizar Fluxo de Status
+      summary: Visualizar Fluxo de Status
+  /orders:
+    get:
+      parameters:
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                response:
+                  value:
+                    data:
+                      attributes:
+                        billed: '1'
+                        closed: '1'
+                        code: '269655556701'
+                        commission: '10.00'
+                        customer_id: LRvd16UC8OLQEG
+                        discount: '00'
+                        dropship: '1'
+                        freightprice: '9.54'
+                        items:
+                          - product_id: 1kPqcLUVBf
+                          - product_id: 8zo8TEASitnq
+                        origin: B2W
+                        seller_freight_id: aBvoMoVj
+                        seller_pdv_id: pUiCDoqJ
+                        subtotal: '53.9'
+                        total: '63.44'
+                        tracked: '1'
+                      id: Mia63F9C
+                      type: orders
+          description: OK
+          headers: {}
+      tags:
+        - Cadastro de Pedidos
+      description: |-
+        Lista os objetos do sistema conforme array do schema `JSON:API Order`.
+
+        Atributos disponíveis com identificador `orders` (`JSON:API Order Attribute`).
+
+        **Retorno**
+
+        Retorna com código `200 OK` no formato `JSON` os dados conforme array de objetos `JSON:API Order`
+
+        **Erros**
+
+        Podem ocorrer os seguintes erros:
+
+        - Sem permissão `403 Forbidden`: quando a autenticação enviada não possuir permissão para realizar a ação no objeto, ou em alguma depedência a ser consultada.
+
+        **Acesso**
+
+        Disponível para todos usuários, porém apenas retornará informações que pertecerem a autenticação.
+      operationId: Listar Pedidos
+      summary: Listar Pedidos
+    post:
+      parameters:
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Created
+          headers: {}
+      tags:
+        - Cadastro de Pedidos
+      description: |-
+        Cadastra um novo objeto no sistema, usandos os dados disponíveis conforme schema `JSON:API Order`.
+
+        Atributos disponíveis com identificador `orders` (`JSON:API Order Attribute`).
+
+        Order necessita obrigatoriamente de `customer_id`.
+
+        Este objeto aceita metadados.
+
+        **Cadastrar Pedido com Itens**
+
+        Cadastra um novo pedido com especificações de itens.
+
+        O atributo `items` deve ser enviado no formato de `array` de `JSON:API Order Item` contendo os itens desejados.
+
+        Order Item necessita obrigatoriamente de `product_id`, `unitary` e `amount`.
+
+        **Retorno**
+
+        Retorna com código `201 OK` no formato `JSON` os dados conforme array de objetos `JSON:API Order`
+
+        **Erros**
+
+        Podem ocorrer os seguintes erros:
+
+        - Sem permissão `403 Forbidden`: quando a autenticação enviada não possuir permissão para realizar a ação no objeto, ou em alguma depedência a ser consultada.
+
+        **Acesso**
+
+        Disponível para todos usuários, porém apenas retornará informações que pertecerem a autenticação.
+      operationId: Cadastrar Pedido
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                balance_paid:
+                  description: Pagamento processado do Pedido
+                  type: number
+                billed:
+                  description: Produto faturado?
+                  type: number
+                billing_address:
+                  description: Dados do Endereço de Cobrança deste objeto
+                  items: {}
+                  type: array
+                closed:
+                  description: Produto finalizado?
+                  type: number
+                commission:
+                  description: Comissão do marketplace deste objeto
+                  type: number
+                customer_id:
+                  description: Id do Cliente do objeto
+                  type: string
+                discount:
+                  description: Pedido tem desconto?
+                  type: number
+                document:
+                  description: CPF/CNPJ do contato deste objeto
+                  type: string
+                document2:
+                  description: RG/IE do contato deste objeto
+                  type: string
+                dropship:
+                  description: Pedido é Dropship?
+                  type: number
+                email:
+                  description: Email do contato deste objeto
+                  type: string
+                freightprice:
+                  description: Preço do frete deste objeto
+                  type: number
+                items:
+                  description: Dados de items de pedido
+                  items: {}
+                  type: array
+                origin:
+                  description: Marketplace deste objeto
+                  type: string
+                pdv_code:
+                  description: Código do objeto
+                  type: string
+                seller_billing_id:
+                  description: Id do Seller Billing do objeto
+                  type: string
+                seller_freight_id:
+                  description: Id do Seller Freight do objeto
+                  type: string
+                seller_id:
+                  description: Id do Vendedor do objeto
+                  type: string
+                seller_pdv_id:
+                  description: Id do Seller Pdv do objeto
+                  type: string
+                seller_shipping_id:
+                  description: Id do Seller Shipping do objeto
+                  type: string
+                seller_warehouse_id:
+                  description: Id do Seller Warehouse do objeto
+                  type: string
+                shipping_address:
+                  description: Dados do Endereço de Entrega deste objeto
+                  items: {}
+                  type: array
+                status:
+                  description: Status do Pedido
+                  type: string
+                subtotal:
+                  description: Soma dos valores dos itens deste objeto
+                  type: number
+                total:
+                  description: Subtotal + frete deste objeto
+                  type: number
+                tracked:
+                  description: Produto enviado?
+                  type: number
+                type:
+                  description: Tipo de pessoa do contato deste objeto
+                  type: string
+              required:
+                - seller_id
+                - seller_pdv_id
+                - pdv_code
+                - subtotal
+                - freightprice
+                - total
+                - commission
+                - origin
+                - billed
+                - tracked
+                - closed
+                - dropship
+                - discount
+                - balance_paid
+              type: object
+      summary: Cadastrar Pedido
+  /orders/ack_order_delivered:
+    post:
+      parameters:
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+          headers: {}
+      tags:
+        - Ack
+      description: |-
+        Entrega do pedido no sistema, usandos os dados disponíveis conforme schema `JSON:API Order Ack`.
+
+        Entregar pedido necessita obrigatoriamente de `order_id` e `success`.
+
+        **Retorno**
+
+        Retorna com código `200 OK` no formato `JSON` os dados conforme array de objetos `JSON:API Order Ack`
+
+        **Erros**
+
+        Podem ocorrer os seguintes erros:
+
+        - Sem permissão `403 Forbidden`: quando a autenticação enviada não possuir permissão para realizar a ação no objeto, ou em alguma depedência a ser consultada.
+
+        **Acesso**
+
+        Disponível para todos usuários, porém apenas retornará informações que pertecerem a autenticação.
+      operationId: Entregar Pedido
+      requestBody:
+        $ref: '#/components/requestBodies/Entregar_PedidoBody'
+      summary: Entregar Pedido
+  /orders/ack_order_prepare:
+    post:
+      parameters:
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+          headers: {}
+      tags:
+        - Ack
+      description: |-
+        Preparo do pedido no sistema, usandos os dados disponíveis conforme schema `JSON:API Order Ack`.
+
+        Enviar pedido necessita obrigatoriamente de `order_id` e `success`.
+
+        **Retorno**
+
+        Retorna com código `200 OK` no formato `JSON` os dados conforme array de objetos `JSON:API Order Ack`
+
+        **Erros**
+
+        Podem ocorrer os seguintes erros:
+
+        - Sem permissão `403 Forbidden`: quando a autenticação enviada não possuir permissão para realizar a ação no objeto, ou em alguma depedência a ser consultada.
+
+        **Acesso**
+
+        Disponível para todos usuários, porém apenas retornará informações que pertecerem a autenticação.
+      operationId: Preparar Pedido
+      requestBody:
+        $ref: '#/components/requestBodies/Entregar_PedidoBody'
+      summary: Preparar Pedido
+  /orders/ack_order_shipped:
+    post:
+      parameters:
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+          headers: {}
+      tags:
+        - Ack
+      description: |-
+        Envio do pedido no sistema, usandos os dados disponíveis conforme schema `JSON:API Order Ack`.
+
+        Enviar pedido necessita obrigatoriamente de `order_id` e `success`.
+
+        **Retorno**
+
+        Retorna com código `200 OK` no formato `JSON` os dados conforme array de objetos `JSON:API Order Ack`
+
+        **Erros**
+
+        Podem ocorrer os seguintes erros:
+
+        - Sem permissão `403 Forbidden`: quando a autenticação enviada não possuir permissão para realizar a ação no objeto, ou em alguma depedência a ser consultada.
+
+        **Acesso**
+
+        Disponível para todos usuários, porém apenas retornará informações que pertecerem a autenticação.
+      operationId: Enviar Pedido
+      requestBody:
+        $ref: '#/components/requestBodies/Entregar_PedidoBody'
+      summary: Enviar Pedido
+  '/orders/{id}':
+    delete:
+      parameters:
+        - description: ID do objeto a ser desativado
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+          headers: {}
+      tags:
+        - Cadastro de Pedidos
+      description: |-
+        Desativa o objeto indicado do sistema.
+
+        **CUIDADO** Todos objeto relacionados a ele (configurações de pedido) serão marcados para desativação e não estarão mais disponíveis.
+      operationId: Desativar Pedido
+      summary: Desativar Pedido
+    get:
+      parameters:
+        - description: ID do objeto a ser consultado
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                response:
+                  value:
+                    data:
+                      attributes:
+                        billed: '1'
+                        closed: '1'
+                        code: '269655556701'
+                        commission: '10.00'
+                        customer_id: LRvd16UC8OLQEG
+                        discount: '00'
+                        dropship: '1'
+                        freightprice: '9.54'
+                        items:
+                          - product_id: 1kPqcLUVBf
+                          - product_id: 8zo8TEASitnq
+                        origin: B2W
+                        seller_freight_id: aBvoMoVj
+                        seller_pdv_id: pUiCDoqJ
+                        subtotal: '53.9'
+                        total: '63.44'
+                        tracked: '1'
+                      id: Mia63F9C
+                      type: orders
+          description: OK
+          headers: {}
+      tags:
+        - Cadastro de Pedidos
+      description: |-
+        Retorna os dados do objeto definido conforme schema `JSON:API Order`.
+
+        Atributos disponíveis com identificador `orders` (`JSON:API Order Attribute`).
+
+        **Retorno**
+
+        Retorna com código `200 OK` no formato `JSON` os dados conforme array de objetos `JSON:API Order`
+
+        **Erros**
+
+        Podem ocorrer os seguintes erros:
+
+        - Sem permissão `403 Forbidden`: quando a autenticação enviada não possuir permissão para realizar a ação no objeto, ou em alguma depedência a ser consultada.
+
+        - Não encontrado `404 Not Found`: quando alguma depedência da consulta não existir no sistema.
+
+        **Acesso**
+
+        Disponível para todos usuários, porém apenas retornará informações que pertecerem a autenticação.
+      operationId: Visualizar Pedido
+      summary: Visualizar Pedido
+    patch:
+      parameters:
+        - description: ID do objeto a ser editado
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          headers: {}
+      tags:
+        - Cadastro de Pedidos
+      description: |-
+        Edita o objeto definido no sistema, alterando apenas os dados enviadas na requisição conforme schema `JSON:API Order`.
+
+        Este objeto aceita metadados.
+
+        **Retorno**
+
+        Retorna com código `200 OK` no formato `JSON` os dados conforme array de objetos `JSON:API Order`
+
+        **Erros**
+
+        Podem ocorrer os seguintes erros:
+
+        - Sem permissão `403 Forbidden`: quando a autenticação enviada não possuir permissão para realizar a ação no objeto, ou em alguma depedência a ser consultada.
+
+        - Não encontrado `404 Not Found`: quando alguma depedência da consulta não existir no sistema.
+
+        **Acesso**
+
+        Disponível para todos usuários, porém apenas retornará informações que pertecerem a autenticação.
+      operationId: Editar Pedido
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example:
+                pdv_code: '269655556701'
+              properties:
+                pdv_code:
+                  type: string
+              type: object
+      summary: Editar Pedido
+  '/orders/{id}/guarantee-shipping':
+    post:
+      parameters:
+        - description: ID do Pedido a ser consultado
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+          headers: {}
+      tags:
+        - Pedidos - Garantia de Entregabilidade
+      description: |-
+        Realiza a garantia de entregabilidade do pedido conforme `JSON:API Order Guarantee Shipping`.
+
+        Garantir Entregabilidade necessita obrigatoriamente de `order_id`.
+
+        **Retorno**
+
+        Retorna com código `204 OK` no formato `JSON` os dados conforme array de objetos `JSON:API Order`
+
+        **Erros**
+
+        Podem ocorrer os seguintes erros:
+
+        - Sem permissão `403 Forbidden`: quando a autenticação enviada não possuir permissão para realizar a ação no objeto, ou em alguma depedência a ser consultada.
+
+        - Não encontrado `404 Not Found`: quando alguma depedência da consulta não existir no sistema.
+
+        **Acesso**
+
+        Disponível para todos usuários, porém apenas retornará informações que pertecerem a autenticação.
+      operationId: Garantir Entregabilidade de Pedido
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example:
+                skip_stock: false
+              properties:
+                skip_stock:
+                  type: boolean
+              type: object
+      summary: Garantir Entregabilidade de Pedido
+  '/orders/{id}/guarantee-stock':
+    post:
+      parameters:
+        - description: ID do Pedido a ser consultado
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+          headers: {}
+      tags:
+        - Pedidos - Garantia de Estoque
+      description: |-
+        Realiza a garantia de estoque do pedido conforme `JSON:API Order Guarantee Stock`.
+
+        Garantir Estoque necessita obrigatoriamente de `order_id`
+
+        **Retorno**
+
+        Retorna com código `204 OK` no formato `JSON`.
+
+        **Erros**
+
+        Podem ocorrer os seguintes erros:
+
+        - Sem permissão `403 Forbidden`: quando a autenticação enviada não possuir permissão para realizar a ação no objeto, ou em alguma depedência a ser consultada.
+
+        - Não encontrado `404 Not Found`: quando alguma depedência da consulta não existir no sistema.
+
+        **Acesso**
+
+        Disponível para todos usuários, porém apenas retornará informações que pertecerem a autenticação.
+      operationId: Garantir Estoque de Pedido
+      summary: Garantir Estoque de Pedido
+  '/orders/{id}/items':
+    get:
+      parameters:
+        - description: ID do Pedido a ser consultado
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                response:
+                  value:
+                    data:
+                      attributes:
+                        amount: '3'
+                      id: rVKFngvwBqWD
+                      type: order-items
+          description: OK
+          headers: {}
+      tags:
+        - Pedidos - Itens de Pedido
+      description: |-
+        Lista os objetos do sistema conforme array do schema `JSON:API OrderItem`.
+
+        Atributos disponíveis com identificador `order-items` (`JSON:API OrderItem Attribute`).
+
+        **Retorno**
+
+        Retorna com código `200 OK` no formato `JSON` os dados conforme array de objetos `JSON:API OrderItem`
+
+        **Erros**
+
+        Podem ocorrer os seguintes erros:
+
+        - Sem permissão `403 Forbidden`: quando a autenticação enviada não possuir permissão para realizar a ação no objeto, ou em alguma depedência a ser consultada.
+
+        - Não encontrado `404 Not Found`: quando alguma depedência da consulta não existir no sistema.
+
+        **Acesso**
+
+        Disponível para todos usuários, porém apenas retornará informações que pertecerem a autenticação.
+      operationId: Listar Itens de Pedido
+      summary: Listar Itens de Pedido
+    post:
+      parameters:
+        - description: ID do Pedido a ser consultado
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '201':
+          content:
+            application/json:
+              examples:
+                response:
+                  value:
+                    data:
+                      attributes:
+                        amount: '3'
+                      id: rVKFngvwBqWD
+                      relationships:
+                        product:
+                          data:
+                            id: Xnbt5J9JvnCK
+                            type: products
+                      type: order-items
+          description: Created
+          headers: {}
+      tags:
+        - Pedidos - Itens de Pedido
+      description: |-
+        Cadastra um novo objeto no sistema, usandos os dados disponíveis conforme schema `JSON:API OrderItem`.
+
+        Atributos disponíveis com identificador `order-items` (`JSON:API OrderItem Attribute`).
+
+        Order Item necessita obrigatoriamente de `order_id`
+
+        Este objeto aceita metadados.
+
+        **Retorno**
+
+        Retorna com código `201 OK` no formato `JSON` os dados conforme array de objetos `JSON:API OrderItem`
+
+        **Erros**
+
+        Podem ocorrer os seguintes erros:
+
+        - Sem permissão `403 Forbidden`: quando a autenticação enviada não possuir permissão para realizar a ação no objeto, ou em alguma depedência a ser consultada.
+
+        - Não encontrado `404 Not Found`: quando alguma depedência da consulta não existir no sistema.
+
+        **Acesso**
+
+        Disponível para todos usuários, porém apenas retornará informações que pertecerem a autenticação.
+      operationId: Cadastrar Item de Pedido
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                amount:
+                  description: Quantia do produto associado ao Pedido
+                  type: number
+                listing_id:
+                  description: Id do Anúncio a ser associado ao Item do Pedido
+                  type: string
+                listing_pdv_code:
+                  description: Código do Anúncio associado ao Item do Pedido
+                  type: string
+                product_id:
+                  description: ID do Produto a associada ao Item do Pedido
+                  type: string
+                seller_warehouse_id:
+                  description: ID da Seller Warehouse a ser associada ao Item do Pedido
+                  type: string
+              required:
+                - product_id
+              type: object
+      summary: Cadastrar Item de Pedido
+  '/orders/{id}/items/{item_id}':
+    delete:
+      parameters:
+        - description: ID do Pedido do objeto a ser desativado
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - description: ID do objeto a ser desativado
+          in: path
+          name: item_id
+          required: true
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+          headers: {}
+      tags:
+        - Pedidos - Itens de Pedido
+      description: |-
+        Desativa o objeto indicado do sistema.
+
+        **CUIDADO** Todos objeto relacionados a ele (configurações de item de pedido) serão marcados para desativação e não estarão mais disponíveis.
+      operationId: Desativar Item de Pedido
+      summary: Desativar Item de Pedido
+    get:
+      parameters:
+        - description: ID do objeto a ser consultado
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                response:
+                  value:
+                    data:
+                      attributes:
+                        amount: '3'
+                      id: rVKFngvwBqWD
+                      relationships:
+                        product:
+                          data:
+                            id: 1kPqcLUVBf
+                            type: products
+                      type: order-items
+          description: OK
+          headers: {}
+      tags:
+        - Pedidos - Itens de Pedido
+      description: |-
+        Retorna os dados do objeto definido conforme schema `JSON:API OrderItem`.
+
+        Atributos disponíveis com identificador `order-items` (`JSON:API OrderItem Attribute`).
+
+        **Retorno**
+
+        Retorna com código `200 OK` no formato `JSON` os dados conforme array de objetos `JSON:API OrderItem`
+
+        **Erros**
+
+        Podem ocorrer os seguintes erros:
+
+        - Sem permissão `403 Forbidden`: quando a autenticação enviada não possuir permissão para realizar a ação no objeto, ou em alguma depedência a ser consultada.
+
+        - Não encontrado `404 Not Found`: quando alguma depedência da consulta não existir no sistema.
+
+        **Acesso**
+
+        Disponível para todos usuários, porém apenas retornará informações que pertecerem a autenticação.
+      operationId: Visualizar Itens de Pedido
+      summary: Visualizar Itens de Pedido
+    patch:
+      parameters:
+        - description: ID do Pedido do objeto a ser editado
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - description: ID do objeto a ser editado
+          in: path
+          name: item_id
+          required: true
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                response:
+                  value:
+                    data:
+                      attributes:
+                        amount: '1'
+                      id: rVKFngvwBqWD
+                      type: order-items
+          description: OK
+          headers: {}
+      tags:
+        - Pedidos - Itens de Pedido
+      description: |-
+        Edita o objeto definido no sistema, alterando apenas os dados enviadas na requisição conforme schema `JSON:API OrderItem`.
+
+        Este objeto aceita metadados.
+
+        **Retorno**
+
+        Retorna com código `200 OK` no formato `JSON` os dados conforme array de objetos `JSON:API OrderItem`
+
+        **Erros**
+
+        Podem ocorrer os seguintes erros:
+
+        - Sem permissão `403 Forbidden`: quando a autenticação enviada não possuir permissão para realizar a ação no objeto, ou em alguma depedência a ser consultada.
+
+        - Não encontrado `404 Not Found`: quando alguma depedência da consulta não existir no sistema.
+
+        **Acesso**
+
+        Disponível para todos usuários, porém apenas retornará informações que pertecerem a autenticação.
+      operationId: Editar Item de Pedido
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example:
+                amount: '1'
+              properties:
+                amount:
+                  type: string
+              type: object
+      summary: Editar Item de Pedido
+  '/orders/{id}/status':
+    get:
+      parameters:
+        - description: ID do Pedido a ser consultado
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                response:
+                  value:
+                    data:
+                      - attributes:
+                          status: Em Fila
+                        id: ymBXvPylPU
+                        type: order-status
+          description: OK
+          headers: {}
+      tags:
+        - Pedidos - Status de Pedido
+      description: |-
+        Lista os objetos do sistema conforme array do schema `JSON:API OrderStatus`.
+
+        Atributos disponíveis com identificador `order-status` (`JSON:API OrderStatus Attribute`).
+
+        **Retorno**
+
+        Retorna com código `200 OK` no formato `JSON` os dados conforme array de objetos `JSON:API Order Status`
+
+        **Erros**
+
+        Podem ocorrer os seguintes erros:
+
+        - Sem permissão `403 Forbidden`: quando a autenticação enviada não possuir permissão para realizar a ação no objeto, ou em alguma depedência a ser consultada.
+
+        - Não encontrado `404 Not Found`: quando alguma depedência da consulta não existir no sistema.
+
+        **Acesso**
+
+        Disponível para todos usuários, porém apenas retornará informações que pertecerem a autenticação.
+      operationId: Listar Status
+      summary: Listar Status
+    post:
+      parameters:
+        - description: ID do Pedido a ser consultado
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '201':
+          content:
+            application/json:
+              examples:
+                response:
+                  value:
+                    data:
+                      attributes:
+                        status: Em Fila
+                      id: ymBXvPylPU
+                      type: order-status
+          description: Created
+          headers: {}
+      tags:
+        - Pedidos - Status de Pedido
+      description: |-
+        Cadastra um novo objeto no sistema, usandos os dados disponíveis conforme schema `JSON:API OrderStatus`.
+
+        Atributos disponíveis com identificador `order-status` (`JSON:API OrderStatus Attribute`).
+
+        Este objeto aceita metadados.
+
+        **Retorno**
+
+        Retorna com código `201 OK` no formato `JSON` os dados conforme array de objetos `JSON:API Order Status`
+
+        **Erros**
+
+        Podem ocorrer os seguintes erros:
+
+        - Sem permissão `403 Forbidden`: quando a autenticação enviada não possuir permissão para realizar a ação no objeto, ou em alguma depedência a ser consultada.
+
+        - Não encontrado `404 Not Found`: quando alguma depedência da consulta não existir no sistema.
+
+        **Acesso**
+
+        Disponível para todos usuários, porém apenas retornará informações que pertecerem a autenticação.
+      operationId: Movimentar Status
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                status:
+                  description: Status que deseja atualizar o pedido
+                  type: string
+              required:
+                - status
+              type: object
+      summary: Movimentar Status
+  '/orders/{id}/status/{status_id}':
+    get:
+      parameters:
+        - description: ID do Pedido do objeto a ser consultado
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - description: ID do objeto a ser consultado
+          in: path
+          name: status_id
+          required: true
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                response:
+                  value:
+                    data:
+                      attributes:
+                        status: Em Fila
+                      id: ymBXvPylPU
+                      type: order-status
+          description: OK
+          headers: {}
+      tags:
+        - Pedidos - Status de Pedido
+      description: |-
+        Retorna os dados do objeto definido conforme schema `JSON:API OrderStatus`.
+
+        Atributos disponíveis com identificador `order-status` (`JSON:API OrderStatus Attribute`).
+
+        **Retorno**
+
+        Retorna com código `200 OK` no formato `JSON` os dados conforme array de objetos `JSON:API Order Status`
+
+        **Erros**
+
+        Podem ocorrer os seguintes erros:
+
+        - Sem permissão `403 Forbidden`: quando a autenticação enviada não possuir permissão para realizar a ação no objeto, ou em alguma depedência a ser consultada.
+
+        - Não encontrado `404 Not Found`: quando alguma depedência da consulta não existir no sistema.
+
+        **Acesso**
+
+        Disponível para todos usuários, porém apenas retornará informações que pertecerem a autenticação.
+      operationId: Visualizar Status
+      summary: Visualizar Status
+  '/orders/{id}/upload/{collection_name}':
+    post:
+      parameters:
+        - description: Identificador do Pedido
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - description: Nome da Collection
+          in: path
+          name: collection_name
+          required: true
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-ID}}'
+          example: '{{X-APP-ID}}'
+          in: header
+          name: X-App-Id
+          required: false
+          schema:
+            type: string
+        - description: 'e.g. {{X-APP-KEY}}'
+          example: '{{X-APP-KEY}}'
+          in: header
+          name: X-App-Key
+          required: false
+          schema:
+            type: string
+      responses:
+        '201':
+          content:
+            application/json:
+              examples:
+                response:
+                  value:
+                    data:
+                      attributes:
+                        alt: null
+                        collection_name: teste
+                        extension: xml
+                        file_name: random.xml
+                        mime_type: text/plain
+                        name: random
+                        order_column: 1
+                        size: 14
+                        size_readable: 14 B
+                        title: null
+                        type_extension: other
+                        type_mime: other
+                        url: 'http://localhost/storage/order/Mia63F9C/jubs/1/random.xml'
+                      id: '1'
+                      type: medias
+          description: Created
+          headers: {}
+      tags:
+        - Pedidos - Upload de Anexos
+      description: 'Fazz upload de arquivo de Pedido no sistema, usandos os dados disponíveis conforme schema `JSON:API Media`.'
+      operationId: Realizar Upload de Pedido
+      summary: Realizar Upload de Pedido
+components:
+  requestBodies:
+    Cancelar_TagBody:
+      content:
+        application/json:
+          schema:
+            properties:
+              message:
+                description: Mensagem do objeto
+                type: string
+              orderfreight_id:
+                description: Id da Entrega do Pedido do objeto
+                type: string
+              success:
+                description: Resposta do objeto
+                type: boolean
+            required:
+              - orderfreight_id
+              - success
+            type: object
+    Entregar_PedidoBody:
+      content:
+        application/json:
+          schema:
+            properties:
+              message:
+                description: Mensagem do objeto
+                type: string
+              order_id:
+                description: Id do Pedido do objeto
+                type: string
+              success:
+                description: Resposta do objeto
+                type: boolean
+            required:
+              - order_id
+              - success
+            type: object
+    Movimentar_StatusBody:
+      content:
+        application/json:
+          schema:
+            properties:
+              status:
+                description: Status que deseja atualizar o pedido
+                type: string
+            required:
+              - status
+            type: object
+  schemas:
+    Cadastrar_Entrega_de_Pedido: {}
+    Cadastrar_Item_de_Pedido: {}
+    Cadastrar_Pedido: {}
+    Cancelar_Tag: {}
+    Criar_Tag: {}
+    Desativar_Entrega_de_Pedido: {}
+    Desativar_Item_de_Pedido: {}
+    Desativar_Pedido: {}
+    Editar_Entrega_de_Pedido: {}
+    Editar_Item_de_Pedido: {}
+    Editar_Pedido: {}
+    Entregar_Pedido: {}
+    Enviar_Pedido: {}
+    Garantir_Entregabilidade_de_Pedido: {}
+    Garantir_Estoque_de_Pedido: {}
+    Listar_Entregas_de_Pedido: {}
+    Listar_Fluxos_de_Status: {}
+    Listar_Itens_de_Pedido: {}
+    Listar_Movimento: {}
+    Listar_Pedidos: {}
+    Listar_Status: {}
+    Movimentar_Status: {}
+    Preparar_Pedido: {}
+    Realizar_Upload_de_Entrega_de_Pedido: {}
+    Realizar_Upload_de_Pedido: {}
+    Salvar_tracking-code: {}
+    Visualizar_Entrega_de_Pedido: {}
+    Visualizar_Fluxo_de_Status: {}
+    Visualizar_Itens_de_Pedido: {}
+    Visualizar_Movimento: {}
+    Visualizar_Pedido: {}
+    Visualizar_Status: {}
+tags:
+  - description: Funções relativas a operação de CRUD para os objetos de Pedido
+    name: Cadastro de Pedidos
+  - description: Funções relativas a operação de CRUD para os objetos de Itens de Pedido
+    name: Pedidos - Itens de Pedido
+  - description: Funções relativas a operação de atualização de status de Pedidos
+    name: Pedidos - Status de Pedido
+  - description: Funções relativas a operação de visualização de status que estão disponíveis para atualização
+    name: Pedidos - Fluxos de Status
+  - description: Funções relativas a operação de upload para os objetos de Pedidos.
+    name: Pedidos - Upload de Anexos
+  - description: Funções relativas a operação de CRUD para os objetos de Fretes de Pedido
+    name: Pedidos - Entregas
+  - description: Funções relativas a operação de visualização de status que estão disponíveis para atualização
+    name: Pedidos/Entregas - Fluxos de Status
+  - description: Funções relativas a operação de atualização de status de Entrega de Pedido
+    name: Pedidos/Entregas - Status de Entregas
+  - description: Funções relativas a operação de upload para os objetos de Entrega de Pedidos.
+    name: Pedidos/Entregas - Upload de Anexos
+  - description: Funções relativas a operação de Garantia de Estoque de Pedido
+    name: Pedidos - Garantia de Estoque
+  - description: Funções relativas a operação de Garantia de Entregabilidade de Pedido
+    name: Pedidos - Garantia de Entregabilidade
+  - description: Rotas de Ack contendo as respostas das integrações.
+    name: Ack
